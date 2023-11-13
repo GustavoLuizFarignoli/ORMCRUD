@@ -8,6 +8,9 @@
 
         <class>model.Clientes</class>
         <class>model.Telefones</class>
+        <class>model.Filme</class>
+        <class>model.Genero</class>
+        <class>model.Locacao</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

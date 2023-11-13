@@ -3,25 +3,37 @@ package model;
 import jakarta.persistence.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Clientes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "Cliente_id")
+    @Column
     private int id;
     @Column
+    private String nome;
+
+    @Column (nullable = false, unique = true)
     private String cpf;
     @OneToMany (mappedBy = "id_cliente")
-    private List<Telefones> telefone;
+    private List<Telefones> telefone = new ArrayList<Telefones>();
 
     public Clientes() {
     }
 
-    public Clientes(String cpf, List<Telefones> telefone) {
+    public Clientes(String nome, String cpf) {
+        this.nome = nome;
         this.cpf = cpf;
-        this.telefone = telefone;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getId() {

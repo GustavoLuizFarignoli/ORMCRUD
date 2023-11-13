@@ -7,15 +7,14 @@ public class Telefones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column (nullable = false, unique = true)
     private String numero;
     @ManyToOne
     @JoinColumn (name = "Cliente_id")
     private Clientes id_cliente;
 
-    public Telefones(String numero, Clientes id_cliente) {
+    public Telefones(String numero) {
         this.numero = numero;
-        this.id_cliente = id_cliente;
     }
 
     public Telefones() {
