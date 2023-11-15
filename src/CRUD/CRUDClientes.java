@@ -86,6 +86,7 @@ public class CRUDClientes {
 		em.close();
 		emf.close();
 	}
+
 	public static void AddTelefone (String numero, String cpf){
 		emf = Persistence.createEntityManagerFactory("LocadoraPU");
 		em = emf.createEntityManager();

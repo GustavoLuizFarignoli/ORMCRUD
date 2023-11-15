@@ -81,6 +81,24 @@ public class CRUDLocacao {
         emf.close();
     }
 
+    public static void EditarLocacao(int id, Date devolucao){
+        emf = Persistence.createEntityManagerFactory("LocadoraPU");
+        em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+
+        try {
+            Locacao buscado = em.find(Locacao.class, id);
+            buscado.setDevolucao(devolucao);
+        } catch (NoResultException ex){
+            System.out.println("Nao foi possível encontrar a locação");
+        }
+
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+    }
+
     public static void DeletarLocacao(int id){
         emf = Persistence.createEntityManagerFactory("LocadoraPU");
         em = emf.createEntityManager();
