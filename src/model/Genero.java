@@ -8,7 +8,7 @@ public class Genero {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
-    @Column
+    @Column (unique = true)
     private String nome;
 
     public Genero(String nome) {

@@ -48,7 +48,7 @@ public class CRUDGeneros {
         emf.close();
     }
 
-    public static void updateGenero(String nomeAtualizado, Long id) {
+    public static void updateGenero(String nomeAtualizado, int id) {
         emf = Persistence.createEntityManagerFactory("LocadoraPU");
         em = emf.createEntityManager();
 
@@ -63,7 +63,7 @@ public class CRUDGeneros {
         emf.close();
     }
 
-    public static void deleteGenero(Long id) {
+    public static void deleteGenero(int id) {
         emf = Persistence.createEntityManagerFactory("LocadoraPU");
         em = emf.createEntityManager();
 
@@ -78,15 +78,16 @@ public class CRUDGeneros {
         emf.close();
     }
 
-    public static Genero findGeneroById(Long id) {
-        emf = Persistence.createEntityManagerFactory("LocadoraPU");
-        em = emf.createEntityManager();
+    public static Genero findGeneroById(int id, EntityManager em) {
 
-        Genero generoProcurado = em.find(Genero.class, id);
+        return em.find(Genero.class, id);
+    }
 
-        em.close();
-        emf.close();
+    public static Genero findGenerobyname(String nome, EntityManager em){
+        Query query = em.createQuery("select g from Genero g where g.nome = :nome");
+        query.setParameter("nome", nome);
+        List<Genero> generos = query.getResultList();
 
-        return generoProcurado;
+        return (Genero) query.getSingleResult();
     }
 }

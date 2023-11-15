@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Filme {
     private String nome;
     @ManyToMany
     @JoinColumn(name = "Genero_id")
-    private List<Genero> generos;
+    private List<Genero> generos = new ArrayList<Genero>();
     @Column
     private Date lancamento;
 

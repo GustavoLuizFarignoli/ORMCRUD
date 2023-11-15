@@ -15,9 +15,9 @@ public class CRUDFilmes {
 
     public static void main(String[] args) {
         // POR ALGUM MOTIVO ESQUISITO O DATE ADICIONA 1900 ANO ENTÃO TEM PASSAR X-1900 COMO PARAMETRO, EX PARA TER 2018 TEM QUE FAZER Date data = new Date(2018-1900, Calendar.JUNE,18);
-        //Date data = new Date(2018-1900, Calendar.JUNE,18);
-        //CreateFilme("Triste Mente",null,data);
-        //UpdateLancamento(2022,12,24,"TRISTE MENTE");
+        Date data = new Date(2018-1900, Calendar.JUNE,18);
+        CreateFilme("Divertida Mente",data);
+        //UpdateLancamento(2022,12,24,"Divertida MENTE");
         //DeleteFilme("Triste mente");
     }
 
