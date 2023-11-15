@@ -23,7 +23,7 @@ public class MenuTelefone {
                      -----------------------------------
                     """);
             System.out.print("Escolha uma opção: ");
-            int op = menu.nextInt();
+            int op = Integer.parseInt(menu.nextLine());
             switch (op) {
                 case 1:
                     criar();
@@ -62,7 +62,6 @@ public class MenuTelefone {
         System.out.println("**********Criar Telefone*********");
         System.out.print("Informe o número do telefone: ");
         String numero = teclado.next();
-        teclado.close();
 
         CRUDTelefones.CreateTelefones(numero);
         }
@@ -77,7 +76,6 @@ public class MenuTelefone {
         System.out.println("**********Obter Cliente*********");
         System.out.print("Informe o CPF do cliente: ");
         String cpf = teclado.next();
-        teclado.close();
 
         CRUDTelefones.LerTelefonesCliente(cpf);
     }
@@ -87,7 +85,6 @@ public class MenuTelefone {
         System.out.println("**********Obter Telefone*********");
         System.out.print("Informe o número do telefone: ");
         String numero = teclado.next();
-        teclado.close();
 
         CRUDTelefones.VisualizarTelefone(numero);
     }
@@ -99,7 +96,6 @@ public class MenuTelefone {
         String numero = teclado.next();
         System.out.print("Informe o CPF do cliente: ");
         String cpf = teclado.next();
-        teclado.close();
 
         CRUDTelefones.AddClienteId(numero, cpf);
     }
@@ -109,7 +105,6 @@ public class MenuTelefone {
         System.out.println("**********Desvincular Cliente*********");
         System.out.print("Informe o número do telefone: ");
         String numero = teclado.next();
-        teclado.close();
 
         CRUDTelefones.RemoveClienteId(numero);
     }
@@ -119,7 +114,6 @@ public class MenuTelefone {
         System.out.println("**********Remover Telefone*********");
         System.out.print("Informe o número do telefone: ");
         String numero = teclado.next();
-        teclado.close();
 
         CRUDTelefones.DeleteTelefone(numero);
     }

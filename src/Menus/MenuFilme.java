@@ -4,10 +4,13 @@ import CRUD.CRUDClientes;
 import CRUD.CRUDFilmes;
 import jakarta.persistence.EntityManager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MenuFilme {
-    public static void menu(){
+    public static void menu() throws ParseException {
         boolean loop = true;
         Scanner menuFilme = new Scanner(System.in);
         do {
@@ -22,7 +25,7 @@ public class MenuFilme {
                      |  6. Encerrar            |
                      -----------------------------
                     """);
-            int op = menuFilme.nextInt();
+            int op = Integer.parseInt(menuFilme.nextLine());
             switch (op){
                 case 1:
                     cadastrar();
@@ -31,7 +34,7 @@ public class MenuFilme {
                     buscar();
                     break;
                 case 3:
-                    visualizar();
+                    CRUDFilmes.LerTodosFilme();
                     break;
                 case 4:
                     editar();
@@ -47,57 +50,39 @@ public class MenuFilme {
         } while (loop);
     }
 
-    public static void cadastrar(){
+    public static void cadastrar() throws ParseException {
         Scanner CadFilme = new Scanner(System.in);
         System.out.println("Digite o nome do filme a ser cadastrado: ");
         String nome = CadFilme.nextLine();
-        System.out.println("Digite a data de lançamento do filme: ");
+        System.out.println("Digite a data de lançamento do filme no formato 'dd/MM/yyyy' : ");
         String lancamento  = CadFilme.nextLine();
-        CadFilme.close();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date ano = formatter.parse(lancamento);
 
-        CRUDClientes.Createcliente(nome, lancamento);
+        CRUDFilmes.CreateFilme(nome, ano);
     }
     public static void buscar(){
         Scanner BscFilme = new Scanner(System.in);
         System.out.println("Digite o nome do filme a ser procurado: ");
         String nome = BscFilme.nextLine();
-        BscFilme.close();
 
         CRUDFilmes.buscarPornome(nome, null);
     }
 
     public static void editar(){
         Scanner EdtFilme = new Scanner(System.in);
-        boolean loop = true;
-        do {
-            System.out.println("""
-                    Selecione uma das seguintes opções:
-                        1. Editar data de lançamento
-                        2. Encerrar
-                    """);
-            System.out.print("Escolha uma opção: ");
-            int op = EdtFilme.nextInt();
-            switch (op){
-                case 1:
-                    System.out.println("Qual filme deseja editar: ");
-                    String nome = EdtFilme.nextLine();
-                    System.out.println("Digite o dia a ser alterado: ");
-                    int dia = EdtFilme.nextInt();
-                    System.out.println("Digite o mês a ser alterado: ");
-                    int mes = EdtFilme.nextInt();
-                    System.out.println("Digite o ano a ser alterado: ");
-                    int ano = EdtFilme.nextInt();
-                    EdtFilme.close();
+            System.out.println("Qual filme deseja editar: ");
+            String nome = EdtFilme.nextLine();
+            System.out.println("Digite o dia a ser alterado: ");
+            int dia = Integer.parseInt(EdtFilme.nextLine());
+            System.out.println("Digite o mês a ser alterado: ");
+            int mes = Integer.parseInt(EdtFilme.nextLine());
+            System.out.println("Digite o ano a ser alterado: ");
+            int ano = Integer.parseInt(EdtFilme.nextLine());
 
-                    CRUDFilmes.UpdateLancamento(dia, mes, ano, nome);
-                    break;
-                case 2:
-                    System.out.println("Voltando para o Menu - Filme");
-                    loop = false;
-                    break;
-            }
-        }while (loop);
-    }
+            CRUDFilmes.UpdateLancamento(dia, mes, ano, nome);
+        }
+
     public static void deletar(){
         Scanner DelFilme = new Scanner(System.in);
         System.out.println("Digite o nome do filme a ser deletado: ");
@@ -110,7 +95,6 @@ public class MenuFilme {
         Scanner VilFilme = new Scanner(System.in);
         System.out.print("Digite o nome do filme a ser visualizado: ");
         String nome = VilFilme.next();
-        VilFilme.close();
 
         CRUDFilmes.VisualizarFilme(nome);
     }

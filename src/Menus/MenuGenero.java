@@ -21,7 +21,7 @@ public class MenuGenero {
                          -----------------------------
                         """);
             System.out.print("Escolha uma opção: ");
-            int op = menuGNR.nextInt();
+            int op = Integer.parseInt(menuGNR.nextLine());
             switch (op){
                 case 1:
                     criar();
@@ -48,7 +48,6 @@ public class MenuGenero {
         Scanner CrtGNR = new Scanner(System.in);
         System.out.println("Digite qual gênero será adicionado: ");
         String nome = CrtGNR.nextLine();
-        CrtGNR.close();
 
         CRUDGeneros.createGenero(nome);
     }
@@ -65,7 +64,6 @@ public class MenuGenero {
         int id = Integer.parseInt(EdtGNR.nextLine());
         System.out.println("Qual será o novo nome do gênero: ");
         String nome = EdtGNR.nextLine();
-        EdtGNR.close();
 
         CRUDGeneros.updateGenero(nome, id);
     }
@@ -74,8 +72,7 @@ public class MenuGenero {
         System.out.println("******Remover Gênero*******");
         Scanner DelGNR = new Scanner(System.in);
         System.out.print("Informe o ID do filme: ");
-        int id = DelGNR.nextInt();
-        DelGNR.close();
+        int id = Integer.parseInt(DelGNR.nextLine());
 
         CRUDGeneros.deleteGenero(id);
     }

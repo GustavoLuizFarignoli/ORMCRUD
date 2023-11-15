@@ -20,8 +20,8 @@ public class MenuCliente {
                      |  6. Encerrar              |
                      -----------------------------
                     """);
+            int op = Integer.parseInt(menuCLT.nextLine());
             System.out.print("Escolha uma opção: ");
-            int op = menuCLT.nextInt();
             switch (op){
                 case 1:
                     cadastrar();
@@ -52,7 +52,6 @@ public class MenuCliente {
         String nome = CadCLT.nextLine();
         System.out.println("Digite o CPF do cliente, utilizando apenas números: ");
         String cpf = CadCLT.nextLine();
-        CadCLT.close();
 
         CRUDClientes.Createcliente(nome, cpf);
     }
@@ -61,7 +60,6 @@ public class MenuCliente {
         Scanner BscCLT = new Scanner(System.in);
         System.out.println("Digite o CPF do cliente, utilizando apenas números, a ser procurado: ");
         String cpf = BscCLT.nextLine();
-        BscCLT.close();
 
         CRUDClientes.VisualizarCliente(cpf);
     }
@@ -77,7 +75,7 @@ public class MenuCliente {
                         3. Encerrar
                     """);
             System.out.print("Escolha uma opção: ");
-            int op = EdtCLT.nextInt();
+            int op = Integer.parseInt(EdtCLT.nextLine());
             switch (op){
                 case 1:
                     System.out.println("Digite o CPF do cliente ao qual será editado seu nome: ");
@@ -101,13 +99,11 @@ public class MenuCliente {
                     break;
             }
         }while (loop);
-        EdtCLT.close();
     }
     public static void deletar(){
         Scanner DelCLT = new Scanner(System.in);
         System.out.println("Digite o CPF do cliente a ser deletado: ");
         String cpf = DelCLT.nextLine();
-        DelCLT.close();
 
         CRUDClientes.DeleteCliente(cpf);
     }

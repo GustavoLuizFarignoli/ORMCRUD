@@ -24,7 +24,7 @@ public class MenuLocacao {
                      |  6. Encerrar            |
                      ---------------------------
                     """);
-            int op = menuCLT.nextInt();
+            int op = Integer.parseInt(menuCLT.nextLine());
             switch (op){
                 case 1:
                     cadastrar();
@@ -79,7 +79,6 @@ public class MenuLocacao {
         } catch (ParseException ex){
             System.out.println("Formato de data inválido. Certifique-se de inserir a data de devolução no formato dd/MM/yyyy!");
         }
-        teclado.close();
 
         CRUDLocacao.CreateLocacao(nome, cpf, dataLocacao, dataDevolucao);
     }
@@ -94,7 +93,6 @@ public class MenuLocacao {
         System.out.println("*****Obter Locações do Cliente*****");
         System.out.print("Informe o CPf do cliente: ");
         String cpf = teclado.next();
-        teclado.close();
 
         CRUDLocacao.LocacaoporCliente(cpf);
     }
@@ -103,13 +101,12 @@ public class MenuLocacao {
         Scanner teclado = new Scanner(System.in);
         System.out.println("*****Editar Locação*****");
         System.out.print("Informe o ID da locação: ");
-        int id = teclado.nextInt();
+        int id = Integer.parseInt(teclado.nextLine());
 
         System.out.print("Informe a nova data de devolução no formato dd/MM/yyyy: ");
         String inputData = teclado.next();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date dataDevolucao = null;
-        teclado.close();
 
         try {
             dataDevolucao = formato.parse(inputData);
@@ -128,8 +125,7 @@ public class MenuLocacao {
         Scanner teclado = new Scanner(System.in);
         System.out.println("*****Remover Locação*****");
         System.out.print("Informe o ID da locação: ");
-        int id = teclado.nextInt();
-        teclado.close();
+        int id = Integer.parseInt(teclado.nextLine());
 
         CRUDLocacao.DeletarLocacao(id);
     }

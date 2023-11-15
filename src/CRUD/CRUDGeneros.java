@@ -45,7 +45,7 @@ public class CRUDGeneros {
         Query query = em.createQuery("select g from Genero g");
         List<Genero> generos = query.getResultList();
         for (Genero g : generos) {
-            System.out.println("Nome do Gênero: " + g.getNome() + "Id: " + g.getId());
+            System.out.println("Nome do Gênero: " + g.getNome() + " Id: " + g.getId());
         }
 
         em.close();

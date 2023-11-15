@@ -1,7 +1,8 @@
 package Menus;
+import java.text.ParseException;
 import java.util.Scanner;
 public class MenuPrincipal {
-    public static void menu(){
+    public static void menu() throws ParseException {
         Scanner menu = new Scanner (System.in);
         boolean loop = true;
         do {
@@ -17,7 +18,7 @@ public class MenuPrincipal {
                      -----------------------------
                     """);
             System.out.print("Escolha uma opção: ");
-            int op = menu.nextInt();
+            int op = Integer.parseInt(menu.nextLine());
                 switch (op) {
                 case 1:
                     MenuCliente.menu();
@@ -37,6 +38,7 @@ public class MenuPrincipal {
                 case 6:
                     System.out.println("Encerrando programa...");
                     loop = false;
+                    break;
                 default:
                     System.out.println("Insira um valor válido!");
                     break;
