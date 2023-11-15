@@ -7,14 +7,19 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 import model.Clientes;
+import model.Telefones;
+
+import static CRUD.CRUDTelefones.CreateTelefones;
+import static CRUD.CRUDTelefones.buscarPorNumero;
 
 public class CRUDClientes {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 
 	public static void main(String[] args) {
-		// Createcliente("Mauro","1111111");
-		Updatenome("Mauro","1111111");
+		Createcliente("Mauro","1111111");
+		AddTelefone("991192406","1111111");
+		AddTelefone("991192407","1111111");
 	}
 	public static void Createcliente(String nome, String cpf){
 		Clientes cliente = new Clientes(nome,cpf);
@@ -63,6 +68,36 @@ public class CRUDClientes {
 
 		Clientes clienteProcurado = buscarPorCpf(cpf, em);
 		clienteProcurado.setNome(nome);
+
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+	}
+	public static void AddTelefone (String numero, String cpf){
+		emf = Persistence.createEntityManagerFactory("LocadoraPU");
+		em = emf.createEntityManager();
+
+		em.getTransaction().begin();
+
+		CreateTelefones(numero);
+		Telefones telebuscado = buscarPorNumero(numero,em);
+		Clientes clibuscado = buscarPorCpf(cpf, em);
+		telebuscado.setId_cliente(clibuscado);
+		clibuscado.getTelefone().add(telebuscado);
+
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
+	}
+
+	public static void DeleteCliente(String cpf){
+		emf = Persistence.createEntityManagerFactory("LocadoraPU");
+		em = emf.createEntityManager();
+
+		em.getTransaction().begin();
+
+		Clientes clienteProcurado = buscarPorCpf(cpf, em);
+		em.remove(clienteProcurado);
 
 		em.getTransaction().commit();
 		em.close();

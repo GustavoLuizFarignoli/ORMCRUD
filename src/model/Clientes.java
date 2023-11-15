@@ -17,7 +17,7 @@ public class Clientes {
 
     @Column (nullable = false, unique = true)
     private String cpf;
-    @OneToMany (mappedBy = "id_cliente")
+    @OneToMany (orphanRemoval = true, cascade = CascadeType.REMOVE, mappedBy = "id_cliente")
     private List<Telefones> telefone = new ArrayList<Telefones>();
 
     public Clientes() {
