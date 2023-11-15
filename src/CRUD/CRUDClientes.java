@@ -2,11 +2,9 @@ package CRUD;
 
 import java.util.List;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
 import model.Clientes;
+import model.Filme;
 import model.Telefones;
 
 import static CRUD.CRUDTelefones.CreateTelefones;
@@ -19,7 +17,7 @@ public class CRUDClientes {
 	public static void main(String[] args) {
 		Createcliente("Mauro","1111111");
 		AddTelefone("991192406","1111111");
-		AddTelefone("991192407","1111111");
+		AddTelefone("991192406","1111111");
 	}
 	public static void Createcliente(String nome, String cpf){
 		Clientes cliente = new Clientes(nome,cpf);
@@ -52,9 +50,12 @@ public class CRUDClientes {
 		emf = Persistence.createEntityManagerFactory("LocadoraPU");
 		em = emf.createEntityManager();
 
-		Clientes buscado = buscarPorCpf(cpf,em);
-
-		System.out.println("Nome: " + buscado.getNome() + " / CPF: " + buscado.getCpf());
+		try{
+			Clientes buscado = buscarPorCpf(cpf,em);
+			System.out.println("Nome: " + buscado.getNome() + " / CPF: " + buscado.getCpf());
+		} catch (NoResultException e) {
+			System.out.println("Não foi possivel encontrar o Cliente em questão");
+		}
 
 		em.close();
 		emf.close();
@@ -66,8 +67,12 @@ public class CRUDClientes {
 
 		em.getTransaction().begin();
 
-		Clientes clienteProcurado = buscarPorCpf(cpf, em);
-		clienteProcurado.setNome(nome);
+		try{
+			Clientes clienteProcurado = buscarPorCpf(cpf, em);
+			clienteProcurado.setNome(nome);
+		} catch (NoResultException e) {
+			System.out.println("Não foi possivel encontrar o Cliente em questão");
+		}
 
 		em.getTransaction().commit();
 		em.close();
@@ -80,10 +85,14 @@ public class CRUDClientes {
 		em.getTransaction().begin();
 
 		CreateTelefones(numero);
-		Telefones telebuscado = buscarPorNumero(numero,em);
-		Clientes clibuscado = buscarPorCpf(cpf, em);
-		telebuscado.setId_cliente(clibuscado);
-		clibuscado.getTelefone().add(telebuscado);
+		try{
+			Telefones telebuscado = buscarPorNumero(numero,em);
+			Clientes clibuscado = buscarPorCpf(cpf, em);
+			telebuscado.setId_cliente(clibuscado);
+			clibuscado.getTelefone().add(telebuscado);
+		} catch (NoResultException e) {
+			System.out.println("Não foi possivel encontrar o Cliente em questão");
+		}
 
 		em.getTransaction().commit();
 		em.close();
@@ -96,15 +105,19 @@ public class CRUDClientes {
 
 		em.getTransaction().begin();
 
-		Clientes clienteProcurado = buscarPorCpf(cpf, em);
-		em.remove(clienteProcurado);
+		try{
+			Clientes clienteProcurado = buscarPorCpf(cpf, em);
+			em.remove(clienteProcurado);
+		} catch (NoResultException e) {
+			System.out.println("Não foi possivel encontrar o Cliente em questão");
+		}
 
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
 	}
 	
-	public static Clientes buscarPorCpf(String cpf, EntityManager em) {
+	public static Clientes buscarPorCpf(String cpf, EntityManager em) throws NoResultException {
 		
 		Query query = em.createQuery("select c from Clientes c where c.cpf = :cpf");
 		query.setParameter("cpf", cpf);

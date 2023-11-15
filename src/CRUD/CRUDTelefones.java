@@ -1,9 +1,6 @@
 package CRUD;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
 import model.Clientes;
 import model.Telefones;
 
@@ -49,13 +46,18 @@ public class CRUDTelefones {
         emf = Persistence.createEntityManagerFactory("LocadoraPU");
         em = emf.createEntityManager();
 
-        Clientes clibuscado = buscarPorCpf(cpf, em);
+        try{
+            Clientes clibuscado = buscarPorCpf(cpf, em);
 
-        Query query = em.createQuery("select t from Telefones t where t.id_cliente = :cliente");
-        query.setParameter("cliente", clibuscado);
-        List<Telefones> telefones = query.getResultList();
-        for (Telefones t: telefones) {
-            System.out.println("Id: " + t.getId() + " Número: " + t.getNumero());
+            Query query = em.createQuery("select t from Telefones t where t.id_cliente = :cliente");
+            query.setParameter("cliente", clibuscado);
+            List<Telefones> telefones = query.getResultList();
+            for (Telefones t: telefones) {
+                System.out.println("Id: " + t.getId() + " Número: " + t.getNumero());
+            }
+
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Cliente em questão");
         }
 
         em.close();
@@ -66,9 +68,12 @@ public class CRUDTelefones {
         emf = Persistence.createEntityManagerFactory("LocadoraPU");
         em = emf.createEntityManager();
 
-        Telefones buscado = buscarPorNumero(numero,em);
-
-        System.out.println("Id: " + buscado.getId() + " Número: " + buscado.getNumero());
+        try{
+            Telefones buscado = buscarPorNumero(numero,em);
+            System.out.println("Id: " + buscado.getId() + " Número: " + buscado.getNumero());
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Telefone em questão");
+        }
 
         em.close();
         emf.close();
@@ -80,9 +85,15 @@ public class CRUDTelefones {
 
         em.getTransaction().begin();
 
-        Telefones telebuscado = buscarPorNumero(numero,em);
-        Clientes clibuscado = buscarPorCpf(cpf, em);
-        telebuscado.setId_cliente(clibuscado);
+        try{
+            Telefones telebuscado = buscarPorNumero(numero,em);
+            Clientes clibuscado = buscarPorCpf(cpf, em);
+            telebuscado.setId_cliente(clibuscado);
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Telefone ou Cliente em questão");
+        }
+
+
 
         em.getTransaction().commit();
         em.close();
@@ -95,8 +106,12 @@ public class CRUDTelefones {
 
         em.getTransaction().begin();
 
-        Telefones buscado = buscarPorNumero(numero,em);
-        buscado.setId_cliente(null);
+        try{
+            Telefones buscado = buscarPorNumero(numero,em);
+            buscado.setId_cliente(null);
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Telefone em questão");
+        }
 
         em.getTransaction().commit();
         em.close();
@@ -109,15 +124,19 @@ public class CRUDTelefones {
 
         em.getTransaction().begin();
 
-        Telefones buscado = buscarPorNumero(numero,em);
-        em.remove(buscado);
+        try{
+            Telefones buscado = buscarPorNumero(numero,em);
+            em.remove(buscado);
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Telefone em questão");
+        }
 
         em.getTransaction().commit();
         em.close();
         emf.close();
     }
 
-    public static Telefones buscarPorNumero(String numero, EntityManager em) {
+    public static Telefones buscarPorNumero(String numero, EntityManager em) throws NoResultException {
 
         Query query = em.createQuery("select t from Telefones t where t.numero = :numero");
         query.setParameter("numero", numero);

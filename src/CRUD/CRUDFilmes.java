@@ -71,8 +71,12 @@ public class CRUDFilmes {
 
         em.getTransaction().begin();
 
-        Filme buscado = buscarPornome(nome,em);
-        buscado.setLancamento(date);
+        try{
+            Filme buscado = buscarPornome(nome,em);
+            buscado.setLancamento(date);
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Filme em questão");
+        }
 
         em.getTransaction().commit();
         em.close();
@@ -85,8 +89,12 @@ public class CRUDFilmes {
 
         em.getTransaction().begin();
 
-        Filme buscado = buscarPornome(nome,em);
-        em.remove(buscado);
+        try{
+            Filme buscado = buscarPornome(nome,em);
+            em.remove(buscado);
+        } catch (NoResultException e) {
+            System.out.println("Não foi possivel encontrar o Filme em questão");
+        }
 
         em.getTransaction().commit();
         em.close();
