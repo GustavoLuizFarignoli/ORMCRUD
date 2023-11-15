@@ -10,7 +10,7 @@ public class Filme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column (nullable = false)
+    @Column (nullable = false, unique = true)
     private String nome;
     @ManyToMany
     @JoinColumn(name = "Genero_id")
@@ -21,9 +21,8 @@ public class Filme {
     public Filme() {
     }
 
-    public Filme(String nome, List<Genero> generos, Date lancamento) {
+    public Filme(String nome, Date lancamento) {
         this.nome = nome;
-        this.generos = generos;
         this.lancamento = lancamento;
     }
 
