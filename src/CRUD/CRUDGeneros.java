@@ -2,10 +2,7 @@ package CRUD;
 
 import java.util.List;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
+import jakarta.persistence.*;
 import model.Genero;
 
 public class CRUDGeneros {
@@ -39,7 +36,6 @@ public class CRUDGeneros {
 
         Query query = em.createQuery("select g from Genero g");
         List<Genero> generos = query.getResultList();
-
         for (Genero g : generos) {
             System.out.println("Nome do Gênero: " + g.getNome());
         }
@@ -54,8 +50,12 @@ public class CRUDGeneros {
 
         em.getTransaction().begin();
 
-        Genero generoProcurado = em.find(Genero.class, id);
-        generoProcurado.setNome(nomeAtualizado);
+        try {
+            Genero generoProcurado = em.find(Genero.class, id);
+            generoProcurado.setNome(nomeAtualizado);
+        } catch (NoResultException e){
+            System.out.println("Não foi possivel encontrar o Gênero, tente novamente");
+        }
 
         em.getTransaction().commit();
 
@@ -69,8 +69,12 @@ public class CRUDGeneros {
 
         em.getTransaction().begin();
 
-        Genero generoProcurado = em.find(Genero.class, id);
-        em.remove(generoProcurado);
+        try {
+            Genero generoProcurado = em.find(Genero.class, id);
+            em.remove(generoProcurado);
+        } catch (NoResultException e){
+            System.out.println("Não foi possivel encontrar o Gênero, tente novamente");
+        }
 
         em.getTransaction().commit();
 
