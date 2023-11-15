@@ -4,7 +4,6 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import model.Clientes;
-import model.Filme;
 import model.Telefones;
 
 import static CRUD.CRUDTelefones.CreateTelefones;
@@ -15,9 +14,9 @@ public class CRUDClientes {
 	private static EntityManager em;
 
 	public static void main(String[] args) {
-		Createcliente("Mauro","1111111");
+		//Createcliente("Mauro","1111111");
 		AddTelefone("991192406","1111111");
-		AddTelefone("991192406","1111111");
+		//AddTelefone("991192407","1111113");
 	}
 	public static void Createcliente(String nome, String cpf){
 		Clientes cliente = new Clientes(nome,cpf);
@@ -26,7 +25,16 @@ public class CRUDClientes {
 		em = emf.createEntityManager();
 
 		em.getTransaction().begin();
-		em.persist(cliente);
+
+		try {
+			Clientes buscado = buscarPorCpf(cpf,em);
+			System.out.println("Este cliente já está cadastrado");
+		} catch (NoResultException e){
+			em.persist(cliente);
+			System.out.println("Cliente Cadastrado com Sucesso");
+
+		}
+
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
@@ -84,14 +92,21 @@ public class CRUDClientes {
 
 		em.getTransaction().begin();
 
-		CreateTelefones(numero);
-		try{
+		try {
 			Telefones telebuscado = buscarPorNumero(numero,em);
-			Clientes clibuscado = buscarPorCpf(cpf, em);
-			telebuscado.setId_cliente(clibuscado);
-			clibuscado.getTelefone().add(telebuscado);
+			System.out.println("Este Telefone já está cadastro");
 		} catch (NoResultException e) {
-			System.out.println("Não foi possivel encontrar o Cliente em questão");
+			CreateTelefones(numero);
+			Telefones telebuscado = null;
+			try {
+				telebuscado = buscarPorNumero(numero, em);
+				Clientes clibuscado = buscarPorCpf(cpf, em);
+				telebuscado.setId_cliente(clibuscado);
+				clibuscado.getTelefone().add(telebuscado);
+			} catch (NoResultException e2) {
+				System.out.println("Não foi possivel encontrar o Cliente em questão");
+				em.remove(telebuscado);
+			}
 		}
 
 		em.getTransaction().commit();

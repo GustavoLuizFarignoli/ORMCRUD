@@ -3,10 +3,8 @@ package CRUD;
 import jakarta.persistence.*;
 import model.Clientes;
 import model.Filme;
-import model.Genero;
 import model.Locacao;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

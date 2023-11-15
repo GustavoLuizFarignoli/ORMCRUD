@@ -1,9 +1,7 @@
 package CRUD;
 
 import jakarta.persistence.*;
-import model.Clientes;
 import model.Filme;
-import model.Genero;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +26,15 @@ public class CRUDFilmes {
         em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        em.persist(filme);
+
+        try {
+            Filme buscado = buscarPornome(nome,em);
+            System.out.println("Este Filme já está cadastrado");
+        } catch (NoResultException e){
+            em.persist(filme);
+            System.out.println("Filme Cadastrado com Sucesso");
+        }
+
         em.getTransaction().commit();
         em.close();
         emf.close();

@@ -23,7 +23,15 @@ public class CRUDGeneros {
         em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        em.persist(genero);
+
+        try {
+            Genero generoProcurado = findGenerobyname(nome,em);
+            System.out.println("Este Gênero já está cadastrado");
+        } catch (NoResultException e){
+            em.persist(genero);
+            System.out.println("Gênero Cadastrado com Sucesso");
+        }
+
         em.getTransaction().commit();
 
         em.close();
