@@ -60,7 +60,7 @@ public class MenuLocacao {
         Date dataLocacao = new Date();
         Calendar calDataAtual = Calendar.getInstance();
         calDataAtual.setTime(dataLocacao);
-        int ano = calDataAtual.get(Calendar.YEAR) - 1900;
+        int ano = calDataAtual.get(Calendar.YEAR);
         calDataAtual.set(Calendar.YEAR, ano);
         dataLocacao = calDataAtual.getTime();
 
@@ -73,7 +73,7 @@ public class MenuLocacao {
             dataDevolucao = formato.parse(inputData);
             Calendar calDataDevolucao = Calendar.getInstance();
             calDataDevolucao.setTime(dataDevolucao);
-            int year = calDataDevolucao.get(Calendar.YEAR) - 1900;
+            int year = calDataDevolucao.get(Calendar.YEAR);
             calDataDevolucao.set(Calendar.YEAR, year);
             dataDevolucao = calDataDevolucao.getTime();
         } catch (ParseException ex){
@@ -112,7 +112,7 @@ public class MenuLocacao {
             dataDevolucao = formato.parse(inputData);
             Calendar calDataDevolucao = Calendar.getInstance();
             calDataDevolucao.setTime(dataDevolucao);
-            int year = calDataDevolucao.get(Calendar.YEAR) - 1900;
+            int year = calDataDevolucao.get(Calendar.YEAR);
             calDataDevolucao.set(Calendar.YEAR, year);
             dataDevolucao = calDataDevolucao.getTime();
             CRUDLocacao.EditarLocacao(id, dataDevolucao);

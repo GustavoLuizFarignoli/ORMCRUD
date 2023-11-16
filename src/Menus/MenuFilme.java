@@ -66,7 +66,7 @@ public class MenuFilme {
         System.out.println("Digite o nome do filme a ser procurado: ");
         String nome = BscFilme.nextLine();
 
-        CRUDFilmes.buscarPornome(nome, null);
+        CRUDFilmes.VisualizarFilme(nome);
     }
 
     public static void editar(){
@@ -80,7 +80,7 @@ public class MenuFilme {
             System.out.println("Digite o ano a ser alterado: ");
             int ano = Integer.parseInt(EdtFilme.nextLine());
 
-            CRUDFilmes.UpdateLancamento(dia, mes, ano, nome);
+            CRUDFilmes.UpdateLancamento(ano, mes, dia, nome);
         }
 
     public static void deletar(){

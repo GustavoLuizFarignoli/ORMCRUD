@@ -84,7 +84,8 @@ public class MenuTelefone {
         Scanner teclado = new Scanner(System.in);
         System.out.println("**********Obter Telefone*********");
         System.out.print("Informe o número do telefone: ");
-        String numero = teclado.next();
+        String numero = teclado.nextLine();
+        System.out.println("NUmero " + numero);
 
         CRUDTelefones.VisualizarTelefone(numero);
     }
